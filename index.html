@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>ANIMANGA.VFX · Esports Edit Tournament Arena</title>
+
+  <!-- Google Fonts: Space Grotesk, Rajdhani, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', '"Rajdhani"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif']
+          },
+          colors: {
+            darkBg: '#08090E',
+            cyberViolet: '#8B5CF6',
+            cyberCrimson: '#F43F5E',
+            cyberCyan: '#06B6D4',
+            cyberGold: '#F59E0B'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Cyber-Anime Styles -->
+  <link rel="stylesheet" href="css/cyber-anime.css">
+</head>
+<body class="cyber-grid-bg antialiased selection:bg-violet-600 selection:text-white">
+
+  <!-- 10-Second Cyber-Anime Splash Screen Container -->
+  <div id="splashScreenContainer"></div>
+
+  <!-- Main Responsive Application Container -->
+  <div class="flex flex-col md:flex-row min-h-screen">
+    <!-- Desktop Left Sidebar Container -->
+    <div id="desktopSidebarContainer"></div>
+
+    <!-- Mobile Top Header Bar Container -->
+    <div id="mobileTopBarContainer" class="md:hidden"></div>
+
+    <!-- Dynamic Main Content Area -->
+    <main class="flex-1 min-w-0 px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 pb-24 sm:pb-28 md:pb-12 max-w-7xl mx-auto w-full">
+      <div id="mainContentArea">
+        <!-- Rendered reactively by js/app.js -->
+        <div class="flex items-center justify-center min-h-[60vh]">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-10 h-10 border-3 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+            <span class="font-display font-bold text-xs uppercase tracking-widest text-slate-400">Loading Arena...</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Floating Glass Bottom Navigation Bar Container -->
+    <div id="mobileBottomBarContainer" class="md:hidden"></div>
+  </div>
+
+  <!-- Offline Network Status Popup Container -->
+  <div id="offlinePopupOverlay" class="fixed top-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-50 pointer-events-none transition-all duration-300 transform -translate-y-24 opacity-0"></div>
+
+  <!-- Global Modals Injection Containers -->
+  <div id="globalModalsContainer"></div>
+
+  <!-- Application Logic & Components -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/components/loading-screen.js"></script>
+  <script src="js/components/video-player.js"></script>
+  <script src="js/components/navbar.js"></script>
+  <script src="js/components/auth-modal.js"></script>
+  <script src="js/components/bracket-modes.js"></script>
+  <script src="js/components/judging-modal.js"></script>
+  <script src="js/components/tournaments-view.js"></script>
+  <script src="js/components/chats-view.js"></script>
+  <script src="js/components/profile-view.js"></script>
+  <script src="js/components/settings-view.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Initialize Modals & Loading Screen in DOM -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Start 10-Second Cyber-Anime Splash Screen
+      const splashContainer = document.getElementById('splashScreenContainer');
+      if (splashContainer && window.LoadingScreenComponent) {
+        splashContainer.innerHTML = window.LoadingScreenComponent.render();
+        window.LoadingScreenComponent.start();
+      }
+
+      // Mount global modals
+      const container = document.getElementById('globalModalsContainer');
+      if (container) {
+        container.innerHTML = 
+          window.AuthModalComponent.render() +
+          window.JudgingModalComponent.render() +
+          window.TournamentsViewComponent.renderCreateModal();
+      }
+    });
+  </script>
+</body>
+</html>
